@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>This is about page !!</h1>
+    <hr />
+    <!-- ----------------------- using fragment ------------------- -->
+    <!-- If you use insert then fragment content is inserted with host tag(div tag) content -->
+    <!-- If you use replace then fragment content replaces the host tag(div tag) content -->
+    <!-- Here base is file name(base.html) with contains parent fragment, parent is fragment name -->
+
+    <!-- trick : 1 
+     <div class="host-tag" th:insert="~{base :: parent}"></div> -->
+    <!-- trick : 2 
+     <div class="host-tag" th:replace="~{base :: parent('Krish', 'Harsh')}">This is div tag</div> -->
+
+    <!-- trick : 3 -->
+    <!-- here we are actually passing whole html markup into fragment parameter like this below -->
+    <!-- <div class="host-tag" th:replace="~{base :: parent(~{::section})}">
+      <section>
+        <h2>Dynamic content</h2>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium
+          dolor veritatis reprehenderit? Voluptatem reiciendis quisquam pariatur
+          repudiandae inventore perferendis dolore. Consectetur eveniet
+          similique aliquid fugiat est! Expedita voluptatibus ipsam explicabo.
+        </p>
+        <button>Click here</button>
+      </section>
+    </div> -->
+
+    <!-- trick : 4 -->
+     <!-- Here, we call the
+      fragment according to condition, if isLogin provided into the pageController's about route is
+      true then parent fragment is called and if isLogin is false then test fragment is called  -->
+     <div class="host-tag" th:replace="${isLogin} ? ~{base :: parent(~{::#logged_in})} : ~{base :: test(~{::#not_logged_in})}">
+        <section id="logged_in">
+            <h1>User is logged in</h1>
+            <h2>Dynamic content</h2>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium
+              dolor veritatis reprehenderit? Voluptatem reiciendis quisquam pariatur
+              repudiandae inventore perferendis dolore. Consectetur eveniet
+              similique aliquid fugiat est! Expedita voluptatibus ipsam explicabo.
+            </p>
+            <button>Click here</button>
+          </section>
+          <section id="not_logged_in">
+            <h1>User is not logged in</h1>
+          </section>
+     </div>
+
+
+  </body>
+</html>
